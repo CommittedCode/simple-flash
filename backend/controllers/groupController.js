@@ -12,6 +12,17 @@ const addGroup = async (req, res) => {
   }
 };
 
+const getGroups = async (req, res) => {
+  try {
+    const groups = await Group.find();
+    res.json(groups);
+  } catch (error) {
+    console.error("Error fetching groups:", error);
+    res.status(500).json({ error: "Failed to fetch groups" });
+  }
+};
+
 module.exports = {
   addGroup,
+  getGroups,
 };
