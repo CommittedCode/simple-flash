@@ -1,14 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const groupRoutes = require("./routes/groupRoutes");
 const app = express();
 const port = 5000;
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
+app.use(express.json());
+
+app.use("/api", groupRoutes);
 
 mongoose
-  .connect("mongodb://127.0.0.1/simple-flash/")
+  .connect("mongodb://127.0.0.1/simple-flash")
   .then(() => {
     console.log("Connected to MongoDB");
 
