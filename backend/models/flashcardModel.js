@@ -9,6 +9,10 @@ const flashcardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  group: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Group",
+  },
 });
 
 const Flashcard = mongoose.model("Flashcard", flashcardSchema);

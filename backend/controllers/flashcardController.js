@@ -18,6 +18,7 @@ const addFlashcardToGroup = async (req, res) => {
     const newFlashcard = new Flashcard({
       question,
       answer,
+      group: group._id,
     });
 
     // Add the flashcard to the group's flashcards array
@@ -33,6 +34,22 @@ const addFlashcardToGroup = async (req, res) => {
   }
 };
 
+// Function to get all flashcards by a specific group
+const getFlashcardsByGroup = async (req, res) => {
+  try {
+    const groupId = req.params.groupId;
+
+    // Find all flashcards that belong to the specified group
+    const flashcards = await Flashcard.find({ group: groupId });
+
+    res.json(flashcards); // Respond with the list of flashcards
+  } catch (error) {
+    console.error("Error getting flashcards by group:", error);
+    res.status(500).json({ error: "Failed to get flashcards by group" });
+  }
+};
+
 module.exports = {
   addFlashcardToGroup,
+  getFlashcardsByGroup,
 };
