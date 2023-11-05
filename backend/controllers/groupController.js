@@ -22,7 +22,24 @@ const getGroups = async (req, res) => {
   }
 };
 
+const deleteGroup = async (req, res) => {
+  try {
+    const groupId = req.params.groupId;
+    const deletedGroup = await Group.findOneAndDelete(groupId);
+
+    if (!deletedGroup) {
+      return res.status(404).json({ error: "Group not found" });
+    }
+
+    res.json({ message: "Group deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting group:", error);
+    res.status(500).json({ error: "Failed to delete the group" });
+  }
+};
+
 module.exports = {
   addGroup,
   getGroups,
+  deleteGroup,
 };
