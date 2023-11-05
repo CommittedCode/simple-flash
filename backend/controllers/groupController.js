@@ -1,4 +1,4 @@
-const Group = require("../models/groupModle");
+const Group = require("../models/groupModel");
 
 const addGroup = async (req, res) => {
   try {

@@ -1,12 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const groupRoutes = require("./routes/groupRoutes");
+const flashcardRoutes = require("./routes/flashcardRoutes");
 const app = express();
 const port = 5000;
 
 app.use(express.json());
 
 app.use("/api", groupRoutes);
+app.use("/api", flashcardRoutes);
 
 mongoose
   .connect("mongodb://127.0.0.1/simple-flash")
