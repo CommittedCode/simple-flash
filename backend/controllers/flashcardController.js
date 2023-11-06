@@ -49,7 +49,37 @@ const getFlashcardsByGroup = async (req, res) => {
   }
 };
 
+const deleteFlashcardByGroup = async (req, res) => {
+  try {
+    const groupId = req.params.groupId;
+    const flashcardId = req.params.flashcardId;
+
+    // Find the flashcard by its ID
+    const flashcard = await Flashcard.findById(flashcardId);
+
+    if (!flashcard) {
+      return res.status(404).json({ error: "Flashcard not found" });
+    }
+
+    // Check if the flashcard belongs to the specified group
+    if (flashcard.group.toString() !== groupId) {
+      return res
+        .status(403)
+        .json({ error: "Flashcard does not belong to the group" });
+    }
+
+    // Delete the flashcard
+    await Flashcard.deleteOne({ _id: flashcardId });
+
+    res.json({ message: "Flashcard deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting flashcard:", error);
+    res.status(500).json({ error: "Failed to delete flashcard" });
+  }
+};
+
 module.exports = {
   addFlashcardToGroup,
   getFlashcardsByGroup,
+  deleteFlashcardByGroup,
 };
